@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="card mt-3">
+    <div class="card-header">
+      Management of Cities
+    </div>
+    <div class="card-body">
+      <button (click)="city = {}; mode = !mode; saveUpdate = true" class="btn btn-secondary mb-3">Add</button>
+      <table *ngIf="!mode" class="table table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th colspan="2">Actions</th>
+        </tr>
+        </thead>
+        <tbody *ngIf="cities">
+        <tr *ngFor="let c of cities">
+          <td>{{c.id}}</td>
+          <td>{{c.name}}</td>
+          <td><button (click)="city = c; mode = !mode; saveUpdate = false;" class="btn btn-outline-info">Edit</button></td>
+          <td><button (click)="onDeleteCity(c.id)" class="btn btn-outline-danger">Delete</button></td>
+        </tr>
+        </tbody>
+      </table>
+      <div *ngIf="mode" class="card col-md-6 offset-md-3">
+        <div class="card-body">
+          <form #f="ngForm" (ngSubmit)="saveUpdate ? onSaveCity(f) : onUpdateCity(f)">
+            <input name="id" [(ngModel)]="city.id" type="number" hidden>
+
+            <input name="name" [(ngModel)]="city.name" class="form-control" type="text" placeholder="City Name">
+
+            <button type="submit" class="btn btn-info mt-2">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="card mt-3">
+    <div class="card-header">Management of Categories</div>
+    <div class="card-body">
+
+      <!-- ========= CRUD CategoryParent ====== !-->
+      <div class="card my-3">
+        <div class="card-header">Category Parent</div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-2">
+              <button (click)="modeP=!modeP; categoryParent={}; saveUpdateP = true" class="btn btn-info mr-2">{{modeP ? '<':'Add'}}</button>
+              <button *ngIf="!modeP" (click)="onGetCategories(); currentCategoryParent = {}" class="btn btn-info">All</button>
+            </div>
+            <div *ngIf="!modeP" class="col-md-10">
+              <div *ngIf="categoryParents">
+                <div *ngFor="let cp of categoryParents" class="card d-inline-block p-3 text-center m-2" [ngClass]="currentCategoryParent === cp ? 'bg-light border-danger':''">
+                  <img [src]="'http://localhost:8080/ads/categoryParents/images/' + cp.image" width="70px" alt="">
+                  <h6 (click)="onGetCategoriesByCategoryParent(cp.name); currentCategoryParent = cp;" class="mt-2">
+                    {{cp.name}}
+                  </h6>
+                  <button (click)="onDeleteCategoryParent(cp.id)" class="btn btn-outline-danger btn-sm mx-2">x</button>
+                  <button (click)="modeP = !modeP; saveUpdateP = false; categoryParent = cp;" class="btn btn-outline-info btn-sm mx-2">!</button>
+                </div>
+              </div>
+            </div>
+            <!-- Form d'ajout -->
+            <div class="col-md-6 offset-md-2 mt-3">
+              <div *ngIf="modeP" class="card">
+                <div class="card-header">Add Category Parent</div>
+                <div class="card-body">
+                  <div *ngIf="error" class="alert alert-danger my-2">Error: {{errorMassage}}</div>
+                  <form #f="ngForm" (ngSubmit)="saveUpdateP ? onSaveCategoryParent(f.value) : onUpdateCategoryParent(f.value)">
+                    <input name="id" [(ngModel)]="categoryParent.id" type="number" class="form-control" hidden>
+                    <input name="name" [(ngModel)]="categoryParent.name" type="text" class="form-control" placeholder="Category Name">
+
+                    <input name="image" [(ngModel)]="categoryParent.image" type="text" hidden>
+                    <input type="file" (change)="onSelectFile($event)" accept="image/png" class="form-control my-2" >
+
+                    <button type="submit" class="btn btn-primary mt-2">{{saveUpdateP ? 'Save' : 'Edit'}}</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ========= CRUD Categories ====== !-->
+      <div class="card my-3">
+        <div class="card-header">Category</div>
+        <div class="card-body">
+          <button (click)="mode = !mode; category = {};saveUpdate = true" class="btn btn-info mb-3">{{mode ? '<' : 'Add'}}</button>
+          <table *ngIf="!mode" class="table table-striped">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th colspan="2">Actions</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="categories">
+            <tr *ngFor="let c of categories">
+              <td>{{c.id}}</td>
+              <td>{{c.name}}</td>
+              <td><button (click)="mode = !mode; saveUpdate = false; category = c;" class="btn btn-outline-info">Edit</button></td>
+              <td><button (click)="onDeleteCategory(c.id)" class="btn btn-outline-danger">Delete</button></td>
+            </tr>
+            </tbody>
+          </table>
+
+          <!-- ====== Form : Add Category ======== -->
+          <div class="col-md-6 offset-md-3">
+            <div *ngIf="mode" class="card">
+              <div class="card-header">Add Category</div>
+              <div class="card-body">
+                <form #f="ngForm" (ngSubmit)="saveUpdate ? onSaveCategory(f.value) : onUpdateCatgory(f.value)">
+                  <input name="id" [(ngModel)]="category.id" type="number" class="form-control" hidden>
+                  <input name="name" [(ngModel)]="category.name" type="text" class="form-control" placeholder="Category Name">
+                  <select name="categoryParent" [(ngModel)]="category.categoryParent" class="form-control my-3">
+                    <option *ngFor="let cp of categoryParents" [ngValue]="cp" >{{cp.name}}</option>
+                  </select>
+                  <button type="submit" class="btn btn-primary mt-2">{{saveUpdate ? 'Save' : 'Edit'}}</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

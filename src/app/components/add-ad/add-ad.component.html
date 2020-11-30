@@ -1,0 +1,49 @@
+<div class="card">
+  <div class="card-header">Ajouter une Annonce</div>
+  <div class="card-body">
+    <form [formGroup]="ad">
+      <div class="form-group">
+        <label for="files">Images</label>
+        <input type="file" (change)="onSelected($event)" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="title">Titre</label>
+        <input formControlName="title" type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea formControlName="description" cols="30" rows="10" class="form-control"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="price">Prix</label>
+        <input formControlName="price" type="number" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="city">Ville</label>
+        <select formControlName="city" class="form-control">
+          <option *ngFor="let c of cities" [ngValue]="c">{{c.name}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="category">Categorie</label>
+        <select formControlName="category" class="form-control">
+          <option *ngFor="let c of categories" [ngValue]="c" [selected]="c.name === 'Computers'">{{c.name}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="typeOD">Type O - D</label>
+        <select formControlName="typeOD" class="form-control">
+          <option *ngFor="let t of typeOD" [ngValue]="t">{{t.typeName}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="typePP">Type O - D</label>
+        <select formControlName="typePP" class="form-control">
+          <option *ngFor="let t of typePP" [ngValue]="t">{{t.typeName}}</option>
+        </select>
+      </div>
+      <button (click)="onSaveAd()" class="btn btn-info">Deposer</button>
+      <button (click)="onAnnuler()" class="btn btn-outline-info mx-2">Annuler</button>
+    </form>
+  </div>
+</div>

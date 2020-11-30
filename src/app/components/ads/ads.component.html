@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="card mt-3">
+    <div class="card-header">Management of Ads</div>
+    <div class="card-body">
+      <button (click)="ad={}; mode = !mode; saveUpdate = true" class="btn btn-danger mb-3">{{mode ? '<' : 'Add'}}</button>
+      <table *ngIf="!mode" class="table table-bordered">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>User</th>
+          <th>Etat</th>
+          <th colspan="3">Actions</th>
+        </tr>
+        </thead>
+        <tbody *ngIf="ads">
+        <tr *ngFor="let a of ads.content;">
+          <td>{{a.id}}</td>
+          <td>{{a.title}}</td>
+          <td>{{a.description}}</td>
+          <td>{{a.appUser.username}}</td>
+          <td><div (click)="onActiveAd(a)" [ngClass]="a.state ? 'fa fa-check-circle fa-2x text-info':'fa fa-times-circle fa-2x text-danger'"></div></td>
+          <td><button (click)="ad = a; mode = !mode; saveUpdate = false" class="btn btn-outline-info">Edit</button></td>
+          <td><button (click)="onDeleteAd(a.id)" class="btn btn-outline-danger">Delete</button></td>
+          <td><button (click)="goAdDetail(a.id)" class="btn btn-outline-primary">Details</button></td>
+        </tr>
+        </tbody>
+      </table>
+
+      <ul *ngIf="!mode" class="nav nav-pills">
+        <li *ngFor="let in of numPages; let i = index;" class="nav-item">
+          <a (click)="onGetAds(i, size); currentPage = i;" [ngClass]="currentPage === i ? 'active': ''" class="nav-link">{{i}}</a>
+        </li>
+      </ul>
+
+      <div class="col-md-6 offset-md-3">
+        <div *ngIf="mode" class="card">
+          <div class="card-header">Add The New Ad</div>
+          <div class="card-body">
+            <form #f="ngForm" (ngSubmit)="saveUpdate ? onSaveAd(f.value) : onUpdateAd(f.value)">
+              <input name="id" [(ngModel)]="ad.id" type="number" hidden>
+              <input name="title" [(ngModel)]="ad.title" type="text" placeholder="Title of Ad" class="form-control my-2">
+              <textarea name="description" [(ngModel)]="ad.description" placeholder="Description of Ad" class="form-control my-2"></textarea>
+              <input name="price" [(ngModel)]="ad.price" type="number" placeholder="Price of Ad" class="form-control my-2">
+              <select *ngIf="cities" [(ngModel)]="ad.city" name="city" class="form-control my-2">
+                <option *ngFor="let c of cities" [ngValue]="c">{{c.name}}</option>
+              </select>
+              <select *ngIf="categories" [(ngModel)]="ad.category" name="category" class="form-control my-2">
+                <option *ngFor="let c of categories" [ngValue]="c">{{c.name}}</option>
+              </select>
+              <select *ngIf="typeod" name="typeOD" [(ngModel)]="ad.typeOD" class="form-control my-2">
+                <option *ngFor="let t of typeod" [ngValue]="t">{{t.typeName}}</option>
+              </select>
+              <select *ngIf="typepp" name="typePP" [(ngModel)]="ad.typePP" class="form-control my-2">
+                <option *ngFor="let t of typepp" [ngValue]="t">{{t.typeName}}</option>
+              </select>
+              <input type="file" accept="image/png" (change)="onSelectFile($event)" class="form-control my-2">
+              <button type="submit" class="btn btn-primary my-2">{{saveUpdate ? 'Save' : 'Edit'}}</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

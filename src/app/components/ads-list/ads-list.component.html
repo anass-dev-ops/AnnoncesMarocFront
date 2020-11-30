@@ -1,0 +1,51 @@
+<div class="container">
+  <div *ngIf="categoryParents" class="card my-3">
+    <div class="card-header">Categories Parents</div>
+    <div class="card-body">
+      <div *ngFor="let cp of categoryParents" (click)="onGetAdByCategoryParentAndCity(cp.name, param); currentCategoryParent = cp;" class="alert alert-primary d-inline-block m-2" [ngClass]="currentCategoryParent === cp ? 'text-white bg-primary':''">
+        {{cp.name}}
+      </div>
+    </div>
+  </div>
+  <!-- ========== Categories ======= -->
+  <div *ngIf="categories" class="card my-3">
+    <div class="card-header">Categories</div>
+    <div class="card-body">
+      <div *ngFor="let c of categories" (click)="onGetAdByCategoryName(c.name); currentCategory = c;" class="alert alert-info d-inline-block mx-2" [ngClass]="currentCategory === c ? 'bg-info text-white':''">
+        {{c.name}}
+      </div>
+    </div>
+  </div>
+  <!-- ========== List of By : Categories Or Cities ======= -->
+  <div class="card my-3">
+    <div class="card-header">
+      Annonces : {{param}}
+    </div>
+    <div class="card-body">
+      <div *ngIf="ads.length == 0" class="alert alert-danger">La List d'annonces est vide</div>
+        <div *ngIf="ads.length != 0">
+          <div class="row">
+            <div *ngFor="let a of ads" class="col-md-3">
+              <div class="card my-2">
+                <div class="card-header">Ad : {{a.id}}</div>
+                <img [src]="'http://localhost:8080/ads/images/' + a.image" alt="" class="card-img-top">
+                <div class="card-body">
+                  <h5>{{a.title}}</h5>
+                  <p>
+                    <strong>Prix: </strong> {{a.price}} <br>
+                    <!--<strong>Description: </strong> {{a.description}} <br>
+                    <strong>Date: </strong> {{a.creationDate}} <br>
+                    <strong>Category: </strong> {{a.category.name}} <br>
+                    <strong>City: </strong> {{a.city.name}} <br>
+                    <strong>Type : </strong> {{a.typeOD.typeName}} - {{a.typePP.typeName}}-->
+                  </p>
+                  <button (click)="goAdDetail(a.id)" class="btn btn-secondary">Details</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="navbar navbar-expand bg-light">
+  <div class="container">
+    <div routerLink="/" class="navbar-brand">
+      Anonnce-ma
+    </div>
+    <div class="nav">
+      <div class="nav-item">
+        <a routerLink="/" class="nav-link">Home</a>
+      </div>
+      <div class="nav-item">
+        <a *ngIf="isAdmin()" routerLink="/ads" class="nav-link">Annonces</a>
+      </div>
+      <div class="nav-item">
+        <a *ngIf="!isAdmin() && isAuthenticated()" routerLink="/my-ads" class="nav-link">Mes Annonces</a>
+      </div>
+      <div  class="nav-item">
+        <a *ngIf="isAdmin()" routerLink="/cities" class="nav-link">Cities</a>
+      </div>
+      <div class="nav-item">
+        <a *ngIf="isAdmin()" routerLink="/categories" class="nav-link">Categories</a>
+      </div>
+      <button *ngIf="!isAdmin()" (click)="deposerAd()" class="btn btn-info mx-2">Deposer une Annonce</button>
+      <div class="nav-item">
+        <button *ngIf="!isAuthenticated()" routerLink="/login" class="btn btn-primary">Login</button>
+      </div>
+      <div *ngIf="!isAuthenticated()" class="nav-item">
+        <button class="btn btn-outline-primary mx-2" routerLink="/register">Register</button>
+      </div>
+      <div *ngIf="isAuthenticated()" class="nav-item">
+        <button class="btn btn-info" (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</div>

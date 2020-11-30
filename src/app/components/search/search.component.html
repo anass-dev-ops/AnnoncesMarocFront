@@ -1,0 +1,27 @@
+<div class="card mt-3">
+  <div class="card-header">
+    Recherche
+  </div>
+  <div class="card-body">
+    <form #f="ngForm">
+      <div class="row">
+        <div class="col">
+          <input name="motCle" ngModel class="form-control" type="text" placeholder="Mot Cle">
+        </div>
+        <div class="col">
+          <select name="categoryName" ngModel *ngIf="categories" class="form-control">
+            <option *ngFor="let c of categories" [value]="c.name">{{c.name}}</option>
+          </select>
+        </div>
+        <div class="col">
+          <select name="cityName" ngModel *ngIf="cities" class="form-control">
+            <option *ngFor="let c of cities" [value]="c.name">{{c.name}}</option>
+          </select>
+        </div>
+        <div class="col-2">
+          <button (click)="onSearch(f)" class="btn btn-secondary">Recherche</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="container">
+  <div *ngIf="ad" class="card mt-3">
+    <div class="card-header">Annonce {{ad.id}}</div>
+    <div class="card-body">
+      <img [src]="'http://localhost:8080/ads/images/' + ad.image" alt="">
+      <h4>{{ad.title}}</h4>
+      <strong>Description: </strong> {{ad.description}} <br>
+      <strong>Date: </strong> {{ad.creationDate}} <br>
+      <strong>Category: </strong> {{ad.category.name}} <br>
+      <strong>City: </strong> {{ad.city.name}} <br>
+      <strong>Type : </strong> {{ad.typeOD.typeName}} - {{ad.typePP.typeName}}
+    </div>
+  </div>
+</div>
